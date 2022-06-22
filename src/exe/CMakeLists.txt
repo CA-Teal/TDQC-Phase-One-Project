@@ -3,8 +3,20 @@ add_executable(
         executable.c
 )
 
-target_include_directories(
+target_link_libraries(
         exe
+        stack
+)
+
+target_compile_options(
+        exe
+        BEFORE
         PUBLIC
-        ${PROJECT_SOURCE_DIR}/include
+        -Wall
+        -Wextra
+        -Wpedantic
+        -Wformat
+        -Wvla
+        -Wfloat-equal
+        -Werror
 )
