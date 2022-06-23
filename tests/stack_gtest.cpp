@@ -50,3 +50,24 @@ TEST(BaseTest, SeekNode)
     stack_destroy(new_stack);
     free(peek_info);
 }
+
+TEST(BaseTest, DumpNode)
+{
+    stack_adt_t * new_stack = stack_init(5);
+    int data = 67;
+    int data1 = 58; 
+    int data2 = 3;
+
+    stack_push(new_stack, &data);
+    stack_push(new_stack, &data1);
+    stack_push(new_stack, &data2);
+    stack_dump(new_stack);
+
+    for (size_t i = 0; i < new_stack->items; i++)
+    {
+        EXPECT_EQ(new_stack->stack_array[i].data, nullptr);
+    }
+    EXPECT_NE(new_stack->stack_array, nullptr);
+
+    stack_destroy(new_stack);
+}
