@@ -16,21 +16,38 @@ char * create_payload(const char * payload)
  */
 int main(void)
 {
-    stack_adt_t  * stack = stack_init(20);
-    char buff[30];
+    stack_adt_t  * stack = stack_init(5);
+    int buff[5] = {6 ,7 ,8 ,9 ,10};
 
     // Notice how there is now heap address in your structure. How are  you
     // going to free them?
-    for (int index = 0; index < 10; index++)
+    for (int index = 0; index < 5; index++)
     {
-        snprintf(buff, 30, "Hello world: %d\n", index);
-        stack_push(stack, create_payload(buff));
+        //snprintf(buff, 30, "Hello world: %d\n", index);
+        //stack_push(stack, create_payload(buff));
+        stack_push(stack, &buff[index]);
     }
 
     // This is how you can cast your payloads
-    void * payload = stack_pop(stack);
-    char * casted_payload = (char *)payload;
+    void * pop_payload = NULL;
+    void * peek_payload = NULL;
+    int index = 0;
 
-    free(casted_payload);
+    if (NULL != (pop_payload = stack_pop(stack)))
+    {
+        printf("data popped: %d\n\n", *(int*)pop_payload);
+    }
+    
+    index = stack->items - 1;
+    if (NULL != (peek_payload = stack_nth_peek(stack, index)))
+    {
+        printf("data at node %d: %d\n\n", index, *(int*)peek_payload);
+    }
+
+    stack_dump(stack);
+
+
+    free(pop_payload);
+    free(peek_payload);
     stack_destroy(stack);
 }
