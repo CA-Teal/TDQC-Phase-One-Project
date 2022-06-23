@@ -38,6 +38,7 @@ void * stack_pop(stack_adt_t * stack){
     memcpy(pop_data, stack->stack_array[top_node].data, sizeof(void*));
 
     free(stack->stack_array[top_node].data);
+    printf("node %d data(%d) popped\n", top_node, *(int*)pop_data);
     stack->items--;
     return pop_data;
 }
@@ -63,7 +64,21 @@ void * stack_nth_peek(stack_adt_t * stack, uint32_t index){
 
 
 void stack_dump(stack_adt_t * stack){
+    if (NULL == stack)
+    {
+        fprintf(stderr, "The stack contains no items");
+        return;
+    }
 
+    printf("Dumping...\n");
+    for (size_t i = 0; i < stack->items; i++)
+    {
+        printf("node %ld data: %d...\n", i, *(int*)stack->stack_array[i].data);
+        free(stack->stack_array[i].data);
+        stack->stack_array[i].data = NULL;
+    }
+
+    stack->items = 0;    
 }
 
 void stack_destroy(stack_adt_t * stack){
@@ -73,11 +88,15 @@ void stack_destroy(stack_adt_t * stack){
     }
     for (size_t i = 0; i < stack->items; i++)
     {
+        if (NULL == stack->stack_array[i].data)
+        {
+            continue;
+        }
+        
         free(stack->stack_array[i].data);
     }
     
     free(stack->stack_array);
     free(stack);
-    stack = NULL;
     stack = NULL;
 }
