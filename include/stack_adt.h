@@ -31,4 +31,3 @@ void stack_dump(stack_adt_t * stack);
 }
 #endif
 #endif //TDQC_PHASE_ONE_SRC_STACK_STACK_ADT_H_
-
