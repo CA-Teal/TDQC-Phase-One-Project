@@ -43,8 +43,21 @@ void * stack_pop(stack_adt_t * stack){
 }
 
 void * stack_nth_peek(stack_adt_t * stack, uint32_t index){
-    void * ptr = (void *)3;
-    return ptr;
+    if (NULL == stack)
+    {
+        fprintf(stderr, "The stack contains no items");
+        return NULL;
+    }else if (index > (stack->items - 1))
+    {
+        fprintf(stderr, "The position is outside of the stacks range");
+        return NULL;
+    }
+    
+    
+    void * peek_data = calloc(1, sizeof(void*));
+    memcpy(peek_data, stack->stack_array[index].data, sizeof(void*));
+
+    return peek_data;
 
 }
 
